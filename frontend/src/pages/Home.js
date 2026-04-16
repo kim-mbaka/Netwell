@@ -7,10 +7,10 @@ export default function Home() {
     <section className="bg-navy min-h-[60vh] flex flex-col lg:flex-row items-center justify-between px-6 py-16 lg:py-24 relative">
       <div className="flex-1 z-10">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-          Welcome to <span className="text-lime">Netwell</span> Fiber
+          Fiber Internet Built for <span className="text-lime">Speed and Stability</span>
         </h1>
         <p className="text-lg md:text-xl mb-8 leading-normal">
-          Experience lightning-fast speeds and dependable connectivity.
+          Connecting to a world of possiblities...
         </p>
         <button
           className="bg-lime text-navy font-bold px-8 py-3 rounded shadow-lg hover:bg-green-400 transition text-lg"

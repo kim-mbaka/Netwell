@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function PricingCard({ plan }) {
   return (
@@ -8,7 +9,12 @@ export default function PricingCard({ plan }) {
       <ul className="mb-4 list-disc list-inside text-navy">
         {plan.features.map((f, i) => <li key={i}>{f}</li>)}
       </ul>
-      <button className="mt-auto bg-lime text-navy font-bold px-4 py-2 rounded hover:bg-green-400 transition">Select Plan</button>
+      <Link 
+        to="/contact"
+        className="mt-auto inline-block text-lime font-bold text-lg hover:text-green-400 transition cursor-pointer underline hover:no-underline"
+      >
+        Contact Us →
+      </Link>
     </div>
   );
 }

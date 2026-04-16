@@ -7,7 +7,7 @@ export default function CTA() {
         {/* Left - Navy Section */}
         <div className="flex-1 bg-navy text-white px-8 py-16 flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-            Join the <span className="text-lime">Netwell</span> family today
+            Join the <span className="text-lime">Netwells</span> family today
           </h2>
           <p className="text-lg text-gray-200 mb-0">
             Elevate your network with ultra-fast fiber connections. Experience the future of internet today.
@@ -20,15 +20,11 @@ export default function CTA() {
           <div className="space-y-4 text-navy">
             <div>
               <p className="font-semibold">Phone</p>
-              <p className="text-lg">(346) 385-1226</p>
+              <p className="text-lg">+254790835430</p>
             </div>
             <div>
               <p className="font-semibold">Email</p>
-              <p className="text-lg">support@netwell.com</p>
-            </div>
-            <div>
-              <p className="font-semibold">Address</p>
-              <p className="text-lg">123 Fiber Lane, Houston, TX</p>
+              <p className="text-lg">netwellstech@gmail.com</p>
             </div>
           </div>
         </div>

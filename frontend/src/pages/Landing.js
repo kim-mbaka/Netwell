@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { handleApiError } from '../utils/errorHandler';
 import Advantages from '../components/Advantages';
@@ -16,7 +17,15 @@ export default function Landing() {
   useEffect(() => {
     // Load plans
     axios.get('/api/plans/')
-      .then(res => setPlans(res.data))
+      .then(res => {
+        // Sort plans by speed (lowest to highest)
+        const sortedPlans = res.data.sort((a, b) => {
+          const speedA = parseInt(a.speed.match(/\d+/)?.[0] || 0);
+          const speedB = parseInt(b.speed.match(/\d+/)?.[0] || 0);
+          return speedA - speedB;
+        });
+        setPlans(sortedPlans);
+      })
       .catch((err) => {
         setPlans([]);
         handleApiError(err, 'Failed to load plans.');
@@ -42,10 +51,10 @@ export default function Landing() {
         {/* Text Content - Left Side */}
         <div className="flex-1 z-20 max-w-2xl pt-8 lg:pt-0">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 lg:mb-6 leading-tight">
-            Welcome to <span className="text-lime">Netwell</span> Fiber
+            Fiber Internet Built for <span className="text-lime">Speed and Stability</span>
           </h1>
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-200 mb-6 lg:mb-8 leading-relaxed">
-            Experience lightning-fast speeds and dependable connectivity.
+            Connecting to a world of possiblities...
           </p>
           <button
             className="bg-lime text-navy font-bold px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg rounded-lg hover:bg-green-400 transition shadow-lg"
@@ -58,7 +67,7 @@ export default function Landing() {
         {/* Floating Transparent Cutout Image - Right Side */}
         <img
           src="/assets/wifi3-removebg-preview.png"
-          alt="Netwell Fiber"
+          alt="Netwells Fiber"
           className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:transform lg:-translate-y-1/2 w-full sm:w-96 lg:w-[500px] h-auto object-contain drop-shadow-2xl -z-0 lg:z-10"
           style={{
             filter: 'drop-shadow(0 20px 25px rgba(0, 0, 0, 0.3))',
@@ -91,9 +100,9 @@ export default function Landing() {
                     </li>
                   ))}
                 </ul>
-                <button className="w-full bg-lime text-navy font-bold px-4 py-2 rounded-lg hover:bg-green-400 transition">
+                <Link to="/contact" className="w-full bg-lime text-navy font-bold px-4 py-2 rounded-lg hover:bg-green-400 transition text-center">
                   Select Plan
-                </button>
+                </Link>
               </div>
             ))}
           </div>

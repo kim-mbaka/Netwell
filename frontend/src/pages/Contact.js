@@ -1,62 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    // In production, send to backend or email service
-    setSubmitted(true);
-  };
+  const navigate = useNavigate();
 
   return (
-    <section className="max-w-xl mx-auto px-4 py-12">
-      <a href="/" className="lg:hidden text-lime text-lg font-semibold mb-6 inline-block hover:text-green-400 transition">← Back Home</a>
-      <h2 className="text-3xl font-bold mb-8 text-white">Contact Us</h2>
-      <div className="bg-white rounded-xl shadow p-6 text-navy mb-8">
-        <div className="mb-2 font-semibold">Email:</div>
-        <div className="mb-2">support@netwell.com</div>
-        <div className="mb-2 font-semibold">Phone:</div>
-        <div className="mb-2">(346) 385-1226</div>
-        <div className="mb-2 font-semibold">Address:</div>
-        <div>123 Fiber Lane, Houston, TX</div>
+    <section className="max-w-2xl mx-auto px-4 py-12">
+      <button 
+        onClick={() => navigate(-1)}
+        className="text-lime text-lg font-semibold mb-6 inline-block hover:text-green-400 transition"
+      >
+        ← Go back
+      </button>
+      <h2 className="text-4xl font-bold mb-4 text-white">Contact Us</h2>
+      <p className="text-gray-200 text-lg mb-12">Get in touch with Netwells Fiber for any inquiries or support.</p>
+      
+      <div className="bg-white rounded-xl shadow-lg p-8 text-navy space-y-8">
+        <div>
+          <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Email</div>
+          <a 
+            href="mailto:netwellstech@gmail.com"
+            className="text-2xl font-bold text-lime hover:text-green-400 transition break-all"
+          >
+            netwellstech@gmail.com
+          </a>
+        </div>
+        
+        <div>
+          <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Phone</div>
+          <a 
+            href="tel:+254790835430"
+            className="text-2xl font-bold text-lime hover:text-green-400 transition"
+          >
+            +254790835430
+          </a>
+        </div>
       </div>
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
-        <input
-          className="p-3 rounded border border-navy"
-          type="text"
-          name="name"
-          placeholder="Name (optional)"
-          value={form.name}
-          onChange={handleChange}
-        />
-        <input
-          className="p-3 rounded border border-navy"
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          className="p-3 rounded border border-navy min-h-[80px]"
-          name="message"
-          placeholder="Message"
-          value={form.message}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit" className="bg-lime text-navy font-bold px-6 py-2 rounded hover:bg-green-400 transition">
-          Send Message
-        </button>
-        {submitted && <div className="text-lime font-semibold mt-2">Thank you! We'll be in touch soon.</div>}
-      </form>
     </section>
   );
 }

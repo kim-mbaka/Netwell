@@ -5,20 +5,20 @@ export default function FAQ({ faqs = [] }) {
 
   const defaultFAQs = [
     {
-      question: 'What is Netwell Fiber?',
-      answer: 'Netwell Fiber is a high-speed internet service provider offering fiber-optic connections with speeds up to 100 Mbps. Netwell brings ultra-fast, reliable internet to homes and businesses.'
+      question: 'What is Netwells Fiber?',
+      answer: 'Netwells Fiber is a high-speed internet service provider offering fiber-optic connections with speeds up to 100 Mbps. Netwells brings ultra-fast, reliable internet to homes and businesses.'
     },
     {
       question: 'How fast is the internet?',
-      answer: 'Netwell Fiber offers multiple plans ranging from 6 Mbps to 100 Mbps, depending on your needs. All plans deliver fast, stable connections suitable for streaming, gaming, and working from home.'
+      answer: 'Netwells Fiber offers multiple plans ranging from 6 Mbps to 100 Mbps, depending on your needs. All plans deliver fast, stable connections suitable for streaming, gaming, and working from home.'
     },
     {
       question: 'Is there a contract?',
-      answer: 'Netwell Fiber offers flexible plans with and without long-term contracts. You can choose the option that best fits your needs.'
+      answer: 'Netwells Fiber offers flexible plans with and without long-term contracts. You can choose the option that best fits your needs.'
     },
     {
       question: 'How do I get started?',
-      answer: 'Getting started with Netwell is easy! Choose your plan from our pricing page and contact our support team. We\'ll handle the installation and get you connected quickly.'
+      answer: 'Getting started with Netwells is easy! Choose your plan from our pricing page and contact our support team. We\'ll handle the installation and get you connected quickly.'
     },
     {
       question: 'What if I experience issues?',

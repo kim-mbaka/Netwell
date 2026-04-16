@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import NetwellsLogo from './NetwellsLogo';
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -19,8 +20,8 @@ export default function Navbar() {
       </div>
       <nav className="bg-navy px-6 py-4 flex items-center justify-between lg:justify-center lg:gap-12">
         {/* Logo - Left */}
-        <Link to="/" className="text-lime text-2xl font-bold tracking-wide flex-shrink-0">
-          Netwell
+        <Link to="/" className="flex-shrink-0 hover:opacity-80 transition">
+          <NetwellsLogo size="medium" variant="full" theme="dark" imageSrc="/assets/logo.png" />
         </Link>
 
         {/* Mobile Me nu Button */}

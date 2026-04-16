@@ -9,7 +9,7 @@ const advantages = [
   },
   {
     title: 'Reliable Connection',
-    description: 'Netwell Fiber provides 99.9% uptime. No more buffering, no more dropped calls—just consistent, dependable service.',
+    description: 'Netwells Fiber provides 99.9% uptime. No more buffering, no more dropped calls—just consistent, dependable service.',
     image: '/assets/advantage2.png', // Upload square image to /public/assets/advantage-2.png
     position: 'left'
   },
@@ -32,7 +32,7 @@ export default function Advantages() {
     <section className="bg-gray-50 py-12 px-6 lg:px-12">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl font-bold text-navy text-center mb-12">
-          Why Choose <span className="text-lime">Netwell</span> Fiber?
+          Why Choose <span className="text-lime">Netwells</span> Fiber?
         </h2>
 
         <div className="space-y-10">
