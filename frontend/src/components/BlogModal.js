@@ -49,14 +49,14 @@ export default function BlogModal({ post, isOpen, onClose }) {
         {/* Scrollable Content */}
         <div className="overflow-y-auto flex-1 flex flex-col">
           {/* Featured Image */}
-          {post.image && (
+          {post.image_filename && (
             <img
-              src={post.image}
+              src={`/images/blog/${post.image_filename}`}
               alt={post.title}
               className="w-full h-64 object-cover"
             />
           )}
-          {!post.image && (
+          {!post.image_filename && (
             <img
               src={DEFAULT_BLOG_IMAGE}
               alt="Default blog"

@@ -66,9 +66,9 @@ export default function Landing() {
 
         {/* Floating Transparent Cutout Image - Right Side */}
         <img
-          src="/assets/wifi3-removebg-preview.png"
+          src="/assets/logo44.png"
           alt="Netwells Fiber"
-          className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:transform lg:-translate-y-1/2 w-full sm:w-96 lg:w-[500px] h-auto object-contain drop-shadow-2xl -z-0 lg:z-10"
+          className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:transform lg:-translate-y-1/2 w-full sm:w-[450px] lg:w-[650px] h-auto object-contain drop-shadow-2xl -z-0 lg:z-10"
           style={{
             filter: 'drop-shadow(0 20px 25px rgba(0, 0, 0, 0.3))',
           }}
