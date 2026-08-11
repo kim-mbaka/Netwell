@@ -10,38 +10,80 @@ A modern, responsive Wi-Fi company website for Netwell, built with React (fronte
 - PostgreSQL database
 - Security best practices
 
-## Run with Docker (recommended)
+## Run with Docker
 
-The whole stack (PostgreSQL + Django/Gunicorn + React served by Nginx) runs with Docker Compose.
+The stack runs with Docker Compose:
+- **db** — PostgreSQL 16
+- **backend** — Django + Gunicorn (runs migrations & collectstatic on start)
+- **frontend** — nginx serving the built React app + reverse-proxying `/api`, `/admin`,
+  `/media`, `/django-static` to the backend.
 
-1. Create your environment file:
+TLS/domain routing is handled by the **host nginx + certbot** on the VPS (see below);
+containers stay private on a localhost port.
+
+### Production deploy (Contabo VPS behind host nginx)
+
+Assumes the server already runs nginx + certbot fronting other apps, each on its own port.
+
+1. **Clone & configure**
 	```bash
-	cp .env.example .env   # copy .env.example on Windows
+	cd ~ && git clone <repo-url> netwells && cd netwells
+	cp .env.example .env
+	nano .env    # set SECRET_KEY, POSTGRES_PASSWORD; confirm APP_PORT + domain vars
 	```
-	Edit `.env` and set a real `SECRET_KEY` and `POSTGRES_PASSWORD`.
+	Keep `DEBUG=False`, cookies `Secure=True`. `APP_PORT` must be a free slot (e.g. 8120).
 
-2. Build and start everything:
+2. **Start containers** (migrations + collectstatic run automatically)
 	```bash
-	docker compose up --build
-	```
-	This automatically runs database migrations and collects static files on start.
-
-3. Open the app:
-	- Site: http://localhost:3000
-	- Django Admin: http://localhost:3000/admin/
-	- API: http://localhost:3000/api/
-
-4. Create an admin user (in a second terminal):
-	```bash
-	docker compose exec backend python manage.py createsuperuser
-	```
-
-5. (Optional) Load sample data:
-	```bash
-	docker compose exec backend python manage.py populate_data
+	docker compose -f docker-compose.prod.yml up -d --build
+	docker ps
 	```
 
-To stop: `docker compose down` (add `-v` to also wipe the database volume).
+3. **Create admin user & (optional) sample data**
+	```bash
+	docker compose -f docker-compose.prod.yml exec backend python manage.py createsuperuser
+	docker compose -f docker-compose.prod.yml exec backend python manage.py populate_data
+	```
+
+4. **Host nginx** — `/etc/nginx/sites-available/netwells.co.ke`:
+	```nginx
+	server {
+	    listen 80;
+	    server_name netwells.co.ke www.netwells.co.ke;
+	    client_max_body_size 60m;
+
+	    location / {
+	        proxy_pass http://127.0.0.1:8120;   # = APP_PORT
+	        proxy_http_version 1.1;
+	        proxy_set_header Host              $host;
+	        proxy_set_header X-Real-IP         $remote_addr;
+	        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+	        proxy_set_header X-Forwarded-Proto $scheme;
+	        proxy_read_timeout 60s;
+	        proxy_send_timeout 60s;
+	    }
+	}
+	```
+
+5. **Enable + TLS**
+	```bash
+	ln -s /etc/nginx/sites-available/netwells.co.ke /etc/nginx/sites-enabled/
+	nginx -t && systemctl reload nginx
+	certbot --nginx -d netwells.co.ke -d www.netwells.co.ke
+	```
+
+6. **Verify**
+	```bash
+	curl -I https://netwells.co.ke
+	docker ps
+	```
+
+Logs: `docker compose -f docker-compose.prod.yml logs -f`.
+Update deploy: `git pull && docker compose -f docker-compose.prod.yml up -d --build`.
+
+### Local testing
+
+`docker compose up --build` (uses `docker-compose.yml`, plain HTTP) → http://localhost:3000.
 
 ## Deployment
 ## Step-by-Step Setup & Run Instructions

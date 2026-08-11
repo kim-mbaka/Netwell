@@ -1,5 +1,8 @@
-# Local development stack — plain HTTP on http://localhost:3000.
-# For production on the VPS use docker-compose.prod.yml instead.
+# Production stack for the VPS.
+# TLS + domain routing are handled by the HOST nginx + certbot; this stack only
+# exposes the app on a private localhost port (see APP_PORT, default 8120).
+#
+#   docker compose -f docker-compose.prod.yml up -d --build
 
 services:
   db:
@@ -25,13 +28,12 @@ services:
              python manage.py collectstatic --noinput &&
              gunicorn netwell.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     environment:
-      SECRET_KEY: ${SECRET_KEY:-dev-insecure-secret-key}
-      # Dev-safe overrides (plain HTTP): these win over any values in .env
-      DEBUG: "True"
-      ALLOWED_HOSTS: localhost,127.0.0.1,backend
-      CSRF_TRUSTED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
-      SESSION_COOKIE_SECURE: "False"
-      CSRF_COOKIE_SECURE: "False"
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG:-False}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-True}
+      CSRF_COOKIE_SECURE: ${CSRF_COOKIE_SECURE:-True}
       DATABASE_URL: postgres://${POSTGRES_USER:-netwell}:${POSTGRES_PASSWORD:-netwell}@db:5432/${POSTGRES_DB:-netwell}
     volumes:
       - static_volume:/app/staticfiles
@@ -45,8 +47,9 @@ services:
   frontend:
     build: ./frontend
     restart: unless-stopped
+    # Bind to localhost only — the host nginx reverse-proxies to this port.
     ports:
-      - "3000:80"
+      - "127.0.0.1:${APP_PORT:-8120}:80"
     volumes:
       - static_volume:/usr/share/nginx/django-static:ro
       - media_volume:/usr/share/nginx/media:ro
