@@ -10,6 +10,39 @@ A modern, responsive Wi-Fi company website for Netwell, built with React (fronte
 - PostgreSQL database
 - Security best practices
 
+## Run with Docker (recommended)
+
+The whole stack (PostgreSQL + Django/Gunicorn + React served by Nginx) runs with Docker Compose.
+
+1. Create your environment file:
+	```bash
+	cp .env.example .env   # copy .env.example on Windows
+	```
+	Edit `.env` and set a real `SECRET_KEY` and `POSTGRES_PASSWORD`.
+
+2. Build and start everything:
+	```bash
+	docker compose up --build
+	```
+	This automatically runs database migrations and collects static files on start.
+
+3. Open the app:
+	- Site: http://localhost:3000
+	- Django Admin: http://localhost:3000/admin/
+	- API: http://localhost:3000/api/
+
+4. Create an admin user (in a second terminal):
+	```bash
+	docker compose exec backend python manage.py createsuperuser
+	```
+
+5. (Optional) Load sample data:
+	```bash
+	docker compose exec backend python manage.py populate_data
+	```
+
+To stop: `docker compose down` (add `-v` to also wipe the database volume).
+
 ## Deployment
 ## Step-by-Step Setup & Run Instructions
 
