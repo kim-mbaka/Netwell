@@ -26,7 +26,7 @@ export default function BlogPost() {
         ← Go back
       </button>
       <h2 className="text-3xl font-bold mb-4 text-navy">{post.title}</h2>
-      {post.image_filename && <img src={`/images/blog/${post.image_filename}`} alt={post.title} className="w-full h-64 object-cover rounded mb-6" />}
+      {(post.image || post.image_filename) && <img src={post.image || `/images/blog/${post.image_filename}`} alt={post.title} className="w-full h-64 object-cover rounded mb-6" />}
       <div className="text-navy text-lg mb-8 whitespace-pre-line">{post.body}</div>
     </section>
   );

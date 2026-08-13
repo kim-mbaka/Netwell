@@ -48,21 +48,12 @@ export default function BlogModal({ post, isOpen, onClose }) {
 
         {/* Scrollable Content */}
         <div className="overflow-y-auto flex-1 flex flex-col">
-          {/* Featured Image */}
-          {post.image_filename && (
-            <img
-              src={`/images/blog/${post.image_filename}`}
-              alt={post.title}
-              className="w-full h-64 object-cover"
-            />
-          )}
-          {!post.image_filename && (
-            <img
-              src={DEFAULT_BLOG_IMAGE}
-              alt="Default blog"
-              className="w-full h-64 object-cover opacity-70"
-            />
-          )}
+          {/* Featured Image: uploaded image → legacy bundled filename → default */}
+          <img
+            src={post.image || (post.image_filename ? `/images/blog/${post.image_filename}` : DEFAULT_BLOG_IMAGE)}
+            alt={post.title}
+            className={`w-full h-64 object-cover ${post.image || post.image_filename ? '' : 'opacity-70'}`}
+          />
 
           {/* Content */}
           <div className="p-6 flex-1">

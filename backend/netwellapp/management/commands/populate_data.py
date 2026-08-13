@@ -15,31 +15,37 @@ class Command(BaseCommand):
             {
                 'title': '6 Mbps Plan',
                 'speed': '6 Mbps',
+                'price': 1500,
                 'features': ['Download speeds up to 6 Mbps', 'Perfect for light usage', 'Affordable pricing']
             },
             {
                 'title': '8 Mbps Plan',
                 'speed': '8 Mbps',
+                'price': 2000,
                 'features': ['Download speeds up to 8 Mbps', 'Great for streaming', 'Reliable connection']
             },
             {
                 'title': '10 Mbps Plan',
                 'speed': '10 Mbps',
+                'price': 2500,
                 'features': ['Download speeds up to 10 Mbps', 'Ideal for families', 'Multiple device support']
             },
             {
                 'title': '25 Mbps Plan',
                 'speed': '25 Mbps',
+                'price': 3500,
                 'features': ['Download speeds up to 25 Mbps', 'Ultra-fast streaming', 'Gaming ready']
             },
             {
                 'title': '50 Mbps Plan',
                 'speed': '50 Mbps',
+                'price': 5000,
                 'features': ['Download speeds up to 50 Mbps', '4K streaming', 'Professional grade']
             },
             {
                 'title': '100 Mbps Plan',
                 'speed': '100 Mbps',
+                'price': 7500,
                 'features': ['Download speeds up to 100 Mbps', 'Maximum performance', 'Business class']
             },
         ]

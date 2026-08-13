@@ -91,7 +91,12 @@ export default function Landing() {
                 className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow flex flex-col h-full"
               >
                 <h3 className="text-navy text-2xl font-bold mb-2">{plan.title}</h3>
-                <p className="text-lime text-3xl font-bold mb-6">{plan.speed}</p>
+                <p className="text-lime text-3xl font-bold mb-1">{plan.speed}</p>
+                {plan.price && (
+                  <p className="text-navy text-lg font-semibold mb-6">
+                    KES {Number(plan.price).toLocaleString()}<span className="text-sm font-normal text-gray-500">/mo</span>
+                  </p>
+                )}
                 <ul className="mb-8 flex-1 space-y-3">
                   {plan.features.map((f, i) => (
                     <li key={i} className="flex items-start">

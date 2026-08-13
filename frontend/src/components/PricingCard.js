@@ -5,7 +5,12 @@ export default function PricingCard({ plan }) {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col hover:scale-105 transition-transform">
       <div className="text-navy text-xl font-bold mb-2">{plan.title}</div>
-      <div className="text-lime text-2xl font-bold mb-4">{plan.speed}</div>
+      <div className="text-lime text-2xl font-bold mb-1">{plan.speed}</div>
+      {plan.price && (
+        <div className="text-navy text-lg font-semibold mb-4">
+          KES {Number(plan.price).toLocaleString()}<span className="text-sm font-normal text-gray-500">/mo</span>
+        </div>
+      )}
       <ul className="mb-4 list-disc list-inside text-navy">
         {plan.features.map((f, i) => <li key={i}>{f}</li>)}
       </ul>
