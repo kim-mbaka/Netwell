@@ -9,6 +9,13 @@ class PricingPlanList(generics.ListAPIView):
 class ReviewListCreate(generics.ListCreateAPIView):
     queryset = Review.objects.order_by('-timestamp')
     serializer_class = ReviewSerializer
+    throttle_scope = 'reviews'
+
+    def get_throttles(self):
+        # Only rate-limit posting reviews; listing stays unthrottled.
+        if self.request.method == 'POST':
+            return super().get_throttles()
+        return []
 
 class BlogPostList(generics.ListAPIView):
     queryset = BlogPost.objects.order_by('-created_at')

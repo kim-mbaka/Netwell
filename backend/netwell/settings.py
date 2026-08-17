@@ -1,5 +1,11 @@
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'netwellapp.exceptions.custom_exception_handler',
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'reviews': '5/hour',
+    },
 }
 
 import os

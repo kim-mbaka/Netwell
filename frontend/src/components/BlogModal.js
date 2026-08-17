@@ -52,6 +52,8 @@ export default function BlogModal({ post, isOpen, onClose }) {
           <img
             src={post.image || (post.image_filename ? `/images/blog/${post.image_filename}` : DEFAULT_BLOG_IMAGE)}
             alt={post.title}
+            loading="lazy"
+            decoding="async"
             className={`w-full h-64 object-cover ${post.image || post.image_filename ? '' : 'opacity-70'}`}
           />
 

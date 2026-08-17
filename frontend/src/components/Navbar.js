@@ -23,6 +23,9 @@ export default function Navbar() {
           <img
             src="/assets/logo.png"
             alt="Netwells Home Fibre"
+            width="139"
+            height="120"
+            decoding="async"
             className="h-12 sm:h-14 lg:h-16 w-auto"
           />
         </Link>

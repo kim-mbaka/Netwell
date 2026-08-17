@@ -11,6 +11,14 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ['id', 'text', 'timestamp']
 
+    def validate_text(self, value):
+        value = (value or '').strip()
+        if len(value) < 2:
+            raise serializers.ValidationError('Review is too short.')
+        if len(value) > 1000:
+            raise serializers.ValidationError('Review is too long (max 1000 characters).')
+        return value
+
 class BlogPostSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(read_only=True)
 

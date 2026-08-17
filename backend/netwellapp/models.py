@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 class PricingPlan(models.Model):
     title = models.CharField(max_length=100)
@@ -28,6 +29,23 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Downscale/compress oversized uploads so no one can ship a 3MB image.
+        if not self.image:
+            return
+        try:
+            path = self.image.path
+        except (ValueError, NotImplementedError):
+            return
+        try:
+            with Image.open(path) as img:
+                if img.width > 1600 or img.height > 1600:
+                    img.thumbnail((1600, 1600))
+                    img.save(path, optimize=True, quality=82)
+        except Exception:
+            pass
 
 class AboutPage(models.Model):
     content = models.TextField()
