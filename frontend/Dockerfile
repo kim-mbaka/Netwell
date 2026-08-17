@@ -1,5 +1,7 @@
 # --- Build stage: compile the React app ---
-FROM node:20-alpine AS build
+# Node 24 (npm 11) matches the npm that generates package-lock.json, so
+# `npm ci` stays in sync. Older npm (node:20 = npm 10) rejects the lockfile.
+FROM node:24-alpine AS build
 
 WORKDIR /app
 
