@@ -13,22 +13,34 @@ class Command(BaseCommand):
         # Create pricing plans
         plans = [
             {
+                'title': '4 Mbps Plan',
+                'speed': '4 Mbps',
+                'price': 1000,
+                'features': ['Standard definition streaming', 'Basic voice calls', 'Light web browsing']
+            },
+            {
                 'title': '8 Mbps Plan',
                 'speed': '8 Mbps',
                 'price': 1500,
-                'features': ['Download speeds up to 8 Mbps', 'Perfect for browsing & social media', 'Great for small households']
+                'features': ['Smooth HD streaming', 'Clear video calls', 'Social media scrolling']
+            },
+            {
+                'title': '12 Mbps Plan',
+                'speed': '12 Mbps',
+                'price': 2000,
+                'features': ['Dual device streaming', 'Group video meetings', 'Smart home basics']
             },
             {
                 'title': '15 Mbps Plan',
                 'speed': '15 Mbps',
-                'price': 2000,
-                'features': ['Download speeds up to 15 Mbps', 'Smooth HD streaming', 'Ideal for families']
+                'price': 2500,
+                'features': ['Single screen 4K', 'Multi device HD', 'Fast app downloads']
             },
             {
                 'title': '20 Mbps Plan',
                 'speed': '20 Mbps',
-                'price': 2500,
-                'features': ['Download speeds up to 20 Mbps', 'Fast streaming & video calls', 'Multiple device support']
+                'price': 3000,
+                'features': ['Small household hub', 'Flawless multi streaming', 'Casual online gaming']
             },
         ]
 
