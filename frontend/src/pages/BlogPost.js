@@ -4,15 +4,50 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { handleApiError } from '../utils/errorHandler';
 
-const isLikelyHeading = (line) => {
-  const cleaned = line.replace(/^[*-•]\s*/, '').replace(/^\d+\.\s*/, '').trim();
-  if (!cleaned || cleaned.length > 80) return false;
-  if (cleaned.includes(':') && cleaned.split(' ').length <= 12) return true;
-  return !/[.!?]$/.test(cleaned) && cleaned.split(/\s+/).length <= 12;
+const renderInlineMarkdown = (text) => {
+  const pattern = /(\*\*.*?\*\*|\*.*?\*|\[[^\]]+\]\([^\)]+\))/g;
+  const children = [];
+  let lastIndex = 0;
+
+  let match;
+  while ((match = pattern.exec(text)) !== null) {
+    const raw = match[0];
+    const before = text.slice(lastIndex, match.index);
+    if (before) {
+      children.push(before);
+    }
+
+    if (raw.startsWith('[[') || raw.startsWith('[')) {
+      const labelMatch = raw.match(/^\[([^\]]+)\]\(([^\)]+)\)$/);
+      if (labelMatch) {
+        children.push(
+          <a key={`${raw}-${match.index}`} href={labelMatch[2]} className="text-lime underline underline-offset-2" target="_blank" rel="noreferrer">
+            {labelMatch[1]}
+          </a>
+        );
+      } else {
+        children.push(raw);
+      }
+    } else if (raw.startsWith('**')) {
+      children.push(<strong key={`${raw}-${match.index}`}>{raw.replace(/^\*\*|\*\*$/g, '')}</strong>);
+    } else if (raw.startsWith('*')) {
+      children.push(<em key={`${raw}-${match.index}`}>{raw.replace(/^\*|\*$/g, '')}</em>);
+    } else {
+      children.push(raw);
+    }
+
+    lastIndex = match.index + raw.length;
+  }
+
+  if (lastIndex < text.length) {
+    children.push(text.slice(lastIndex));
+  }
+
+  return children;
 };
 
 const renderBodyContent = (body) => {
-  const lines = body.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  const lines = body.split(/\n/).map((line) => line.trim()).filter(Boolean);
   const blocks = [];
   let paragraphLines = [];
   let listItems = [];
@@ -20,74 +55,106 @@ const renderBodyContent = (body) => {
 
   const flushParagraph = () => {
     if (!paragraphLines.length) return;
-    blocks.push({
-      type: 'paragraph',
-      content: paragraphLines.join(' '),
-    });
+    blocks.push({ type: 'paragraph', content: paragraphLines.join(' ') });
     paragraphLines = [];
   };
 
   const flushList = () => {
     if (!listItems.length) return;
-    blocks.push({
-      type: 'list',
-      ordered: orderedList,
-      items: listItems,
-    });
+    blocks.push({ type: 'list', ordered: orderedList, items: listItems });
     listItems = [];
     orderedList = false;
   };
 
-  lines.forEach((line) => {
-    const trimmed = line.trim();
+  const isMarkupHeading = (line) => /^#{1,3}\s+/.test(line);
+  const isBulletLine = (line) => /^[-*•]\s+/.test(line);
+  const isNumberedLine = (line) => /^\d+\.\s+/.test(line);
 
-    if (/^\d+\.\s+/.test(trimmed)) {
+  const isPlainHeading = (line, nextLine) => {
+    const text = line.replace(/^[-*•]\s*/, '').replace(/^\d+\.\s*/, '').trim();
+    if (!text || text.length > 80) return false;
+    if (/^#{1,3}\s+/.test(line)) return true;
+    if (/[.!?]$/.test(text)) return false;
+    if (text.split(/\s+/).length > 12) return false;
+    if (!nextLine) return true;
+    if (isBulletLine(nextLine) || isNumberedLine(nextLine)) return true;
+    return true;
+  };
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    const nextLine = lines[i + 1] || '';
+
+    if (isMarkupHeading(line)) {
       flushParagraph();
-      listItems.push(trimmed.replace(/^\d+\.\s+/, ''));
-      orderedList = true;
-      return;
+      flushList();
+      const level = line.match(/^#+/)?.[0].length || 2;
+      blocks.push({
+        type: 'heading',
+        content: line.replace(/^#{1,3}\s+/, ''),
+        level,
+      });
+      continue;
     }
 
-    if (/^[-*•]\s+/.test(trimmed)) {
+    if (isBulletLine(line)) {
       flushParagraph();
-      listItems.push(trimmed.replace(/^[-*•]\s+/, ''));
+      listItems.push(line.replace(/^[-*•]\s+/, ''));
       orderedList = false;
-      return;
+      continue;
     }
 
-    if (isLikelyHeading(trimmed)) {
+    if (isNumberedLine(line)) {
+      flushParagraph();
+      listItems.push(line.replace(/^\d+\.\s+/, ''));
+      orderedList = true;
+      continue;
+    }
+
+    if (isPlainHeading(line, nextLine)) {
       flushParagraph();
       flushList();
-      blocks.push({ type: 'heading', content: trimmed });
-      return;
+      blocks.push({ type: 'heading', content: line, level: 3 });
+      continue;
     }
 
-    if (listItems.length && !/^[-*•]\s+|^\d+\.\s+/.test(trimmed)) {
+    if (listItems.length && !isBulletLine(line) && !isNumberedLine(line)) {
       flushList();
     }
 
-    paragraphLines.push(trimmed);
-  });
+    paragraphLines.push(line);
+  }
 
   flushList();
   flushParagraph();
 
   return blocks.map((block, index) => {
     if (block.type === 'heading') {
+      const HeadingTag = block.level === 2 ? 'h2' : 'h3';
       return (
-        <h3 key={`heading-${index}`} className="mt-8 mb-3 text-2xl font-bold text-navy leading-tight">
-          {block.content}
-        </h3>
+        <HeadingTag
+          key={`heading-${index}`}
+          className={
+            block.level === 2
+              ? 'mt-8 mb-3 text-2xl md:text-3xl font-bold text-navy leading-tight'
+              : 'mt-6 mb-2 text-xl md:text-2xl font-semibold text-navy leading-snug'
+          }
+        >
+          {renderInlineMarkdown(block.content)}
+        </HeadingTag>
       );
     }
 
     if (block.type === 'list') {
       const ListTag = block.ordered ? 'ol' : 'ul';
       return (
-        <ListTag key={`list-${index}`} className={`mb-6 ml-6 space-y-2 text-lg text-navy ${block.ordered ? 'list-decimal' : 'list-disc'}`}>
+        <ListTag
+          key={`list-${index}`}
+          className={`mb-6 ml-6 space-y-2 text-lg text-navy ${block.ordered ? 'list-decimal' : 'list-disc'}`}
+        >
           {block.items.map((item, itemIndex) => (
             <li key={`${block.type}-${index}-${itemIndex}`} className="leading-relaxed">
-              {item}
+              {renderInlineMarkdown(item)}
             </li>
           ))}
         </ListTag>
@@ -96,7 +163,7 @@ const renderBodyContent = (body) => {
 
     return (
       <p key={`paragraph-${index}`} className="mb-5 text-lg leading-8 text-navy">
-        {block.content}
+        {renderInlineMarkdown(block.content)}
       </p>
     );
   });
