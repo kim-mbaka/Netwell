@@ -273,17 +273,24 @@ export default function BlogPost() {
 
       <article className="rounded-[28px] bg-white p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_rgba(15,23,42,0.12)] border border-slate-200/80">
         <div className="mb-6 sm:mb-8 border-l-4 border-lime pl-4">
-          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-navy/70">Netwell Fiber</p>
-          <h1 className="mt-2 text-2xl sm:text-3xl md:text-5xl font-bold text-navy leading-tight tracking-[-0.03em]">{post.title}</h1>
+          <div className="mb-3 flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.26em] text-slate-500">
+            <span>Netwell Fiber</span>
+            <span className="h-1 w-1 rounded-full bg-slate-300" />
+            <span>Insight</span>
+          </div>
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl font-bold text-navy leading-[0.95] tracking-[-0.04em]">{post.title}</h1>
         </div>
 
         {post.excerpt && (
-          <p className="mb-6 sm:mb-8 rounded-2xl bg-slate-50 p-3 sm:p-4 text-base sm:text-lg font-medium leading-7 sm:leading-8 text-navy/80 border border-slate-200">
-            {post.excerpt}
-          </p>
+          <div className="mb-8 sm:mb-10 rounded-[22px] border border-slate-200 bg-[linear-gradient(135deg,#f8fafc_0%,#f7f8f3_100%)] p-4 sm:p-5">
+            <p className="mb-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Why it matters</p>
+            <p className="font-serif text-base sm:text-xl leading-7 sm:leading-9 text-navy/80">
+              {post.excerpt}
+            </p>
+          </div>
         )}
 
-        <div className="prose prose-slate prose-lg max-w-none text-navy prose-headings:font-bold prose-h2:text-xl prose-h2:sm:text-2xl prose-h3:text-lg prose-h3:sm:text-xl prose-p:my-4 prose-li:my-2 prose-ul:my-4 prose-ol:my-4 prose-a:text-lime prose-a:no-underline hover:prose-a:underline">
+        <div className="prose prose-slate prose-lg max-w-none text-navy prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-[-0.02em] prose-h2:mt-10 prose-h2:mb-3 prose-h3:mt-8 prose-h3:mb-2 prose-p:my-5 prose-p:text-[15px] prose-p:sm:text-[17px] prose-p:leading-8 prose-p:sm:leading-9 prose-li:my-2 prose-ul:my-5 prose-ol:my-5 prose-a:text-lime prose-a:no-underline hover:prose-a:underline">
           {renderBodyContent(post.body)}
         </div>
       </article>

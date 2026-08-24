@@ -211,32 +211,42 @@ export default function BlogModal({ post, isOpen, onClose }) {
       className="fixed inset-0 z-50 rounded-lg shadow-2xl max-w-3xl mx-auto backdrop:bg-black/50 backdrop:backdrop-blur-sm"
     >
       <div className="bg-white rounded-[26px] overflow-hidden flex flex-col max-h-[90vh] w-[min(92vw,760px)] shadow-[0_30px_70px_rgba(17,24,39,0.18)] border border-slate-200/80">
-        <div className="flex justify-between items-center px-4 py-4 sm:px-6 sm:py-5 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
-          <h2 className="text-xl sm:text-2xl font-bold text-navy leading-tight pr-3 tracking-[-0.02em]">{post.title}</h2>
+        <div className="flex justify-between items-start gap-4 px-4 py-4 sm:px-6 sm:py-5 border-b border-slate-200 bg-gradient-to-r from-slate-50 via-white to-slate-50">
+          <div className="min-w-0 pr-2">
+            <div className="mb-2 flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+              <span>Netwell Fiber</span>
+              <span className="h-1 w-1 rounded-full bg-slate-300" />
+              <span>Insight</span>
+            </div>
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-navy leading-[1.05] tracking-[-0.04em]">{post.title}</h2>
+          </div>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-200 transition"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-xl text-slate-500 shadow-sm transition hover:border-slate-300 hover:text-slate-700 hover:bg-slate-50"
             aria-label="Close"
           >
-            ✕
+            ×
           </button>
         </div>
 
         <div className="overflow-y-auto flex-1 flex flex-col bg-white">
           <div className="px-4 py-4 sm:px-6 sm:py-6 flex-1">
             <div className="max-w-none">
-              <div className="mb-5 border-b border-slate-200 pb-3">
-                <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-navy/60">Article</p>
+              <div className="mb-7 rounded-[22px] border border-slate-200 bg-[linear-gradient(135deg,#f8fafc_0%,#f7f8f3_100%)] p-4 sm:p-5">
+                <p className="mb-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Why it matters</p>
+                <p className="font-serif text-base sm:text-xl leading-7 sm:leading-9 text-navy/80">
+                  {post.excerpt || 'Important guidance for your home internet setup.'}
+                </p>
               </div>
               {renderBodyContent(post.body || post.excerpt || '')}
             </div>
           </div>
         </div>
 
-        <div className="border-t border-slate-200 bg-slate-50/60 p-3 sm:p-4 flex justify-end">
+        <div className="border-t border-slate-200 bg-slate-50/70 p-3 sm:p-4 flex justify-end">
           <button
             onClick={onClose}
-            className="bg-lime text-navy font-bold px-4 py-2 sm:px-6 rounded-lg hover:bg-green-400 transition-shadow shadow-sm hover:shadow-md transition"
+            className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-100"
           >
             Close
           </button>
