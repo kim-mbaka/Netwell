@@ -1,7 +1,5 @@
 import React from 'react';
 
-const DEFAULT_BLOG_IMAGE = 'https://images.unsplash.com/photo-1516321318423-f06f70504504?auto=format&fit=crop&w=800&h=500&q=80';
-
 export default function BlogCard({ post, onLearnMore }) {
   // Truncate excerpt to 3 lines (roughly 150 chars)
   const truncatedExcerpt = post.excerpt?.substring(0, 150) + (post.excerpt?.length > 150 ? '...' : '');

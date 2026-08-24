@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-const DEFAULT_BLOG_IMAGE = 'https://images.unsplash.com/photo-1516321318423-f06f70504504?auto=format&fit=crop&w=800&h=500&q=80';
-
 export default function BlogModal({ post, isOpen, onClose }) {
   const dialogRef = useRef(null);
 
@@ -48,15 +46,6 @@ export default function BlogModal({ post, isOpen, onClose }) {
 
         {/* Scrollable Content */}
         <div className="overflow-y-auto flex-1 flex flex-col">
-          {/* Featured Image: uploaded image → legacy bundled filename → default */}
-          <img
-            src={post.image || (post.image_filename ? `/images/blog/${post.image_filename}` : DEFAULT_BLOG_IMAGE)}
-            alt={post.title}
-            loading="lazy"
-            decoding="async"
-            className={`w-full h-64 object-cover ${post.image || post.image_filename ? '' : 'opacity-70'}`}
-          />
-
           {/* Content */}
           <div className="p-6 flex-1">
             <div className="prose prose-sm max-w-none">

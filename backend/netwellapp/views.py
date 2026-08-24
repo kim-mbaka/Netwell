@@ -24,6 +24,8 @@ class BlogPostList(generics.ListAPIView):
 class BlogPostDetail(generics.RetrieveAPIView):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
+    lookup_field = 'slug'
+    lookup_url_kwarg = 'slug'
 
 class AboutPageView(generics.RetrieveAPIView):
     queryset = AboutPage.objects.all()

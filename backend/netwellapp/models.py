@@ -1,5 +1,5 @@
 from django.db import models
-from PIL import Image
+from django.utils.text import slugify
 
 class PricingPlan(models.Model):
     title = models.CharField(max_length=100)
@@ -21,31 +21,32 @@ class Review(models.Model):
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField()
-    image = models.ImageField(upload_to='blog/', blank=True, null=True,
-                              help_text='Upload a featured image (recommended). Takes priority over the legacy filename below.')
-    image_filename = models.CharField(max_length=300, blank=True, default='', help_text='Legacy: filename of a bundled image in /public/images/blog/. Prefer the upload field above.')
     excerpt = models.CharField(max_length=300, blank=True)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    meta_title = models.CharField(max_length=200, blank=True, default='')
+    meta_description = models.CharField(max_length=300, blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            index = 1
+            while BlogPost.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{index}"
+                index += 1
+            self.slug = slug
+
+        if not self.meta_title:
+            self.meta_title = self.title
+
+        if not self.meta_description:
+            self.meta_description = self.excerpt or (self.body[:160].strip() if self.body else '')
+
         super().save(*args, **kwargs)
-        # Downscale/compress oversized uploads so no one can ship a 3MB image.
-        if not self.image:
-            return
-        try:
-            path = self.image.path
-        except (ValueError, NotImplementedError):
-            return
-        try:
-            with Image.open(path) as img:
-                if img.width > 1600 or img.height > 1600:
-                    img.thumbnail((1600, 1600))
-                    img.save(path, optimize=True, quality=82)
-        except Exception:
-            pass
 
 class AboutPage(models.Model):
     content = models.TextField()

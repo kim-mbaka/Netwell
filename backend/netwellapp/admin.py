@@ -16,9 +16,10 @@ class ReviewAdmin(admin.ModelAdmin):
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_at')
-    search_fields = ('title', 'excerpt', 'body')
+    list_display = ('title', 'slug', 'created_at')
+    search_fields = ('title', 'slug', 'excerpt', 'body', 'meta_title', 'meta_description')
     readonly_fields = ('created_at',)
+    prepopulated_fields = {'slug': ('title',)}
 
 
 @admin.register(AboutPage)

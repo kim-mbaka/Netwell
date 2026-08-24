@@ -20,11 +20,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         return value
 
 class BlogPostSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(read_only=True)
-
     class Meta:
         model = BlogPost
-        fields = ['id', 'title', 'body', 'image', 'image_filename', 'excerpt', 'created_at']
+        fields = ['id', 'title', 'slug', 'body', 'excerpt', 'meta_title', 'meta_description', 'created_at']
 
 class AboutPageSerializer(serializers.ModelSerializer):
     class Meta:

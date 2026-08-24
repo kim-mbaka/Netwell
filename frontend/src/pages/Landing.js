@@ -6,8 +6,6 @@ import Advantages from '../components/Advantages';
 import BlogModal from '../components/BlogModal';
 import FAQ from '../components/FAQ';
 
-const DEFAULT_BLOG_IMAGE = 'https://images.unsplash.com/photo-1516321318423-f06f70504504?auto=format&fit=crop&w=800&h=500&q=80';
-
 export default function Landing() {
   const [plans, setPlans] = useState([]);
   const [posts, setPosts] = useState([]);
