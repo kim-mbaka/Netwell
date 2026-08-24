@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
     "@fontsource/montserrat": "^5.3.0",
     "@headlessui/react": "^1.7.7",
     "@heroicons/react": "^2.0.18",
