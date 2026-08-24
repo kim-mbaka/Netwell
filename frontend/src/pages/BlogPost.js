@@ -71,14 +71,16 @@ const renderBodyContent = (body) => {
   const isNumberedLine = (line) => /^\d+\.\s+/.test(line);
 
   const isPlainHeading = (line, nextLine) => {
-    const text = line.replace(/^[-*•]\s*/, '').replace(/^\d+\.\s*/, '').trim();
-    if (!text || text.length > 80) return false;
-    if (/^#{1,3}\s+/.test(line)) return true;
-    if (/[.!?]$/.test(text)) return false;
-    if (text.split(/\s+/).length > 12) return false;
+    const text = line.trim();
+    if (!text || text.length > 80 || isMarkupHeading(line) || isBulletLine(line) || isNumberedLine(line)) {
+      return false;
+    }
+
+    const words = text.split(/\s+/).filter(Boolean).length;
+    if (words > 8) return false;
     if (!nextLine) return true;
     if (isBulletLine(nextLine) || isNumberedLine(nextLine)) return true;
-    return true;
+    return !/[.!?]$/.test(text);
   };
 
   for (let i = 0; i < lines.length; i += 1) {
@@ -97,6 +99,13 @@ const renderBodyContent = (body) => {
       continue;
     }
 
+    if (isPlainHeading(line, nextLine)) {
+      flushParagraph();
+      flushList();
+      blocks.push({ type: 'heading', content: line, level: 3 });
+      continue;
+    }
+
     if (isBulletLine(line)) {
       flushParagraph();
       listItems.push(line.replace(/^[-*•]\s+/, ''));
@@ -108,13 +117,6 @@ const renderBodyContent = (body) => {
       flushParagraph();
       listItems.push(line.replace(/^\d+\.\s+/, ''));
       orderedList = true;
-      continue;
-    }
-
-    if (isPlainHeading(line, nextLine)) {
-      flushParagraph();
-      flushList();
-      blocks.push({ type: 'heading', content: line, level: 3 });
       continue;
     }
 
@@ -136,8 +138,8 @@ const renderBodyContent = (body) => {
           key={`heading-${index}`}
           className={
             block.level === 2
-              ? 'mt-8 mb-3 text-2xl md:text-3xl font-bold text-navy leading-tight'
-              : 'mt-6 mb-2 text-xl md:text-2xl font-semibold text-navy leading-snug'
+              ? 'mt-7 mb-3 text-xl sm:text-2xl md:text-3xl font-bold text-navy leading-tight tracking-[-0.02em]'
+              : 'mt-5 mb-2 text-lg sm:text-xl md:text-2xl font-semibold text-navy leading-snug tracking-[-0.015em]'
           }
         >
           {renderInlineMarkdown(block.content)}
@@ -150,10 +152,10 @@ const renderBodyContent = (body) => {
       return (
         <ListTag
           key={`list-${index}`}
-          className={`mb-6 ml-6 space-y-2 text-lg text-navy ${block.ordered ? 'list-decimal' : 'list-disc'}`}
+          className={`mb-5 ml-5 sm:ml-6 space-y-2 text-base sm:text-lg text-navy/85 ${block.ordered ? 'list-decimal' : 'list-disc'}`}
         >
           {block.items.map((item, itemIndex) => (
-            <li key={`${block.type}-${index}-${itemIndex}`} className="leading-relaxed">
+            <li key={`${block.type}-${index}-${itemIndex}`} className="leading-7 sm:leading-8 pl-1 marker:text-lime">
               {renderInlineMarkdown(item)}
             </li>
           ))}
@@ -162,7 +164,7 @@ const renderBodyContent = (body) => {
     }
 
     return (
-      <p key={`paragraph-${index}`} className="mb-5 text-lg leading-8 text-navy">
+      <p key={`paragraph-${index}`} className="mb-4 text-base sm:text-lg leading-7 sm:leading-8 text-navy/85">
         {renderInlineMarkdown(block.content)}
       </p>
     );
@@ -269,19 +271,19 @@ export default function BlogPost() {
         ← Go back
       </button>
 
-      <article className="rounded-3xl bg-white p-6 md:p-10 shadow-2xl shadow-navy/20">
-        <div className="mb-8 border-l-4 border-lime pl-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-navy/70">Netwell Fiber</p>
-          <h1 className="mt-2 text-3xl md:text-5xl font-bold text-navy leading-tight">{post.title}</h1>
+      <article className="rounded-[28px] bg-white p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_rgba(15,23,42,0.12)] border border-slate-200/80">
+        <div className="mb-6 sm:mb-8 border-l-4 border-lime pl-4">
+          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-navy/70">Netwell Fiber</p>
+          <h1 className="mt-2 text-2xl sm:text-3xl md:text-5xl font-bold text-navy leading-tight tracking-[-0.03em]">{post.title}</h1>
         </div>
 
         {post.excerpt && (
-          <p className="mb-8 rounded-2xl bg-slate-50 p-4 text-lg font-medium leading-8 text-navy/80 border border-slate-200">
+          <p className="mb-6 sm:mb-8 rounded-2xl bg-slate-50 p-3 sm:p-4 text-base sm:text-lg font-medium leading-7 sm:leading-8 text-navy/80 border border-slate-200">
             {post.excerpt}
           </p>
         )}
 
-        <div className="prose prose-lg max-w-none text-navy">
+        <div className="prose prose-slate prose-lg max-w-none text-navy prose-headings:font-bold prose-h2:text-xl prose-h2:sm:text-2xl prose-h3:text-lg prose-h3:sm:text-xl prose-p:my-4 prose-li:my-2 prose-ul:my-4 prose-ol:my-4 prose-a:text-lime prose-a:no-underline hover:prose-a:underline">
           {renderBodyContent(post.body)}
         </div>
       </article>
