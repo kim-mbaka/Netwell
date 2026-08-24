@@ -4,6 +4,104 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { handleApiError } from '../utils/errorHandler';
 
+const isLikelyHeading = (line) => {
+  const cleaned = line.replace(/^[*-•]\s*/, '').replace(/^\d+\.\s*/, '').trim();
+  if (!cleaned || cleaned.length > 80) return false;
+  if (cleaned.includes(':') && cleaned.split(' ').length <= 12) return true;
+  return !/[.!?]$/.test(cleaned) && cleaned.split(/\s+/).length <= 12;
+};
+
+const renderBodyContent = (body) => {
+  const lines = body.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  const blocks = [];
+  let paragraphLines = [];
+  let listItems = [];
+  let orderedList = false;
+
+  const flushParagraph = () => {
+    if (!paragraphLines.length) return;
+    blocks.push({
+      type: 'paragraph',
+      content: paragraphLines.join(' '),
+    });
+    paragraphLines = [];
+  };
+
+  const flushList = () => {
+    if (!listItems.length) return;
+    blocks.push({
+      type: 'list',
+      ordered: orderedList,
+      items: listItems,
+    });
+    listItems = [];
+    orderedList = false;
+  };
+
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+
+    if (/^\d+\.\s+/.test(trimmed)) {
+      flushParagraph();
+      listItems.push(trimmed.replace(/^\d+\.\s+/, ''));
+      orderedList = true;
+      return;
+    }
+
+    if (/^[-*•]\s+/.test(trimmed)) {
+      flushParagraph();
+      listItems.push(trimmed.replace(/^[-*•]\s+/, ''));
+      orderedList = false;
+      return;
+    }
+
+    if (isLikelyHeading(trimmed)) {
+      flushParagraph();
+      flushList();
+      blocks.push({ type: 'heading', content: trimmed });
+      return;
+    }
+
+    if (listItems.length && !/^[-*•]\s+|^\d+\.\s+/.test(trimmed)) {
+      flushList();
+    }
+
+    paragraphLines.push(trimmed);
+  });
+
+  flushList();
+  flushParagraph();
+
+  return blocks.map((block, index) => {
+    if (block.type === 'heading') {
+      return (
+        <h3 key={`heading-${index}`} className="mt-8 mb-3 text-2xl font-bold text-navy leading-tight">
+          {block.content}
+        </h3>
+      );
+    }
+
+    if (block.type === 'list') {
+      const ListTag = block.ordered ? 'ol' : 'ul';
+      return (
+        <ListTag key={`list-${index}`} className={`mb-6 ml-6 space-y-2 text-lg text-navy ${block.ordered ? 'list-decimal' : 'list-disc'}`}>
+          {block.items.map((item, itemIndex) => (
+            <li key={`${block.type}-${index}-${itemIndex}`} className="leading-relaxed">
+              {item}
+            </li>
+          ))}
+        </ListTag>
+      );
+    }
+
+    return (
+      <p key={`paragraph-${index}`} className="mb-5 text-lg leading-8 text-navy">
+        {block.content}
+      </p>
+    );
+  });
+};
+
 export default function BlogPost() {
   const navigate = useNavigate();
   const { slug } = useParams();
@@ -96,15 +194,30 @@ export default function BlogPost() {
   if (!post) return <div className="text-center text-white py-20">Loading...</div>;
 
   return (
-    <section className="max-w-3xl mx-auto px-4 py-12">
+    <section className="max-w-4xl mx-auto px-4 py-12 md:py-16">
       <button 
         onClick={() => navigate(-1)}
         className="text-lime text-lg font-semibold mb-8 inline-block hover:text-green-400 transition"
       >
         ← Go back
       </button>
-      <h2 className="text-3xl font-bold mb-4 text-navy">{post.title}</h2>
-      <div className="text-navy text-lg mb-8 whitespace-pre-line">{post.body}</div>
+
+      <article className="rounded-3xl bg-white p-6 md:p-10 shadow-2xl shadow-navy/20">
+        <div className="mb-8 border-l-4 border-lime pl-4">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-navy/70">Netwell Fiber</p>
+          <h1 className="mt-2 text-3xl md:text-5xl font-bold text-navy leading-tight">{post.title}</h1>
+        </div>
+
+        {post.excerpt && (
+          <p className="mb-8 rounded-2xl bg-slate-50 p-4 text-lg font-medium leading-8 text-navy/80 border border-slate-200">
+            {post.excerpt}
+          </p>
+        )}
+
+        <div className="prose prose-lg max-w-none text-navy">
+          {renderBodyContent(post.body)}
+        </div>
+      </article>
     </section>
   );
 }

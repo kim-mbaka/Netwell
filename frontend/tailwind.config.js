@@ -10,7 +10,7 @@ module.exports = {
         lime: '#77CD0C',
       },
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
       },
     },
   },
