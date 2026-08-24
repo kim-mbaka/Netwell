@@ -469,7 +469,7 @@ If a proper restart does not fix the issue, the problem likely is not with your 
 
 Final reminder
 
-A simple restart, done properly, solves more problems than most people expect. But if you have followed these steps and you are still without a reliable connection, Netwell Fiber's support team is ready to help, whether that means remote troubleshooting or sending a technician to your home. Get in touch and we will have you back online quickly."""
+A simple restart, done properly, solves more problems than most people expect. But if you have followed these steps and you are still without a reliable connection, Netwell Fiber's support team is ready to help, whether that means remote troubleshooting or sending a technician to your home. Get in touch and we will have you back online quickly.""",
                 'excerpt': 'Restarting your router the right way fixes more problems than you\'d expect. Here\'s exactly how to do it, step by step.'
             },
             {
