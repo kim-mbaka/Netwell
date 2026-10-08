@@ -45,7 +45,7 @@ export default function Landing() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-navy min-h-screen lg:min-h-[85vh] flex items-start lg:items-center px-6 sm:px-8 lg:px-16 py-8 lg:py-24 relative overflow-hidden">
+      <section className="bg-brand-gradient min-h-screen lg:min-h-[85vh] flex items-start lg:items-center px-6 sm:px-8 lg:px-16 py-8 lg:py-24 relative overflow-hidden">
         {/* Text Content - Left Side */}
         <div className="flex-1 z-20 max-w-2xl pt-8 lg:pt-0">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 lg:mb-6 leading-tight">

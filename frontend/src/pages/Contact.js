@@ -12,8 +12,8 @@ export default function Contact() {
       >
         ← Go back
       </button>
-      <h2 className="text-4xl font-bold mb-4 text-white">Contact Us</h2>
-      <p className="text-gray-200 text-lg mb-12">Get in touch with Netwells Fiber for any inquiries or support.</p>
+      <h2 className="text-4xl font-bold mb-4 text-navy dark:text-white">Contact Us</h2>
+      <p className="text-navy/70 dark:text-gray-200 text-lg mb-12">Get in touch with Netwells Fiber for any inquiries or support.</p>
       
       <div className="bg-white rounded-xl shadow-lg p-8 text-navy space-y-8">
         <div>

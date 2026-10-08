@@ -260,7 +260,7 @@ export default function BlogPost() {
     }
   }, [post, slug]);
 
-  if (!post) return <div className="text-center text-white py-20">Loading...</div>;
+  if (!post) return <div className="text-center text-navy dark:text-white py-20">Loading...</div>;
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-12 md:py-16">

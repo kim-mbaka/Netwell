@@ -22,7 +22,7 @@ export default function About() {
       >
         ← Go back
       </button>
-      <h2 className="text-3xl font-bold mb-8 text-white">About Us</h2>
+      <h2 className="text-3xl font-bold mb-8 text-navy dark:text-white">About Us</h2>
       <div className="bg-white rounded-xl shadow p-6 text-navy text-lg whitespace-pre-line">
         {about}
       </div>

@@ -13,8 +13,20 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://netwells.co.ke/" />
     <link rel="canonical" href="https://netwells.co.ke/" />
+    <script>
+      // Apply the saved theme before first paint to avoid a flash. Default: dark.
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark') t = 'dark';
+          document.documentElement.classList.toggle('dark', t === 'dark');
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
-  <body class="font-sans bg-navy text-white">
+  <body class="font-sans">
     <div id="root"></div>
   </body>
 </html>

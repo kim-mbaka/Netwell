@@ -10,11 +10,28 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Light theme (default base) */
+html {
+  background-color: #eef2fb;
+}
+
 body {
-  font-family: 'Manrope', sans-serif;
   font-weight: 400;
-  background-color: #02287F;
-  color: #fff;
+  color: #0f1f4b;
+  background-color: #eef2fb;
+  min-height: 100vh;
+}
+
+/* Dark theme — royal-blue gradient shell */
+html.dark {
+  background-color: #0e2150;
+}
+
+html.dark body {
+  color: #ffffff;
+  background-color: #0e2150;
+  background-image: linear-gradient(135deg, #0e2150 0%, #17306b 48%, #244a9c 100%);
+  background-attachment: fixed;
 }
 
 p, li, span, div {

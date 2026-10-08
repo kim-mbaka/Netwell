@@ -30,7 +30,7 @@ export default function Pricing() {
       >
         ← Go back
       </button>
-      <h2 className="text-3xl font-bold mb-8 text-white">Choose Your Plan</h2>
+      <h2 className="text-3xl font-bold mb-8 text-navy dark:text-white">Choose Your Plan</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {plans.map(plan => (
           <div key={plan.id} className="bg-white rounded-xl shadow-lg p-6 flex flex-col hover:scale-105 transition-transform">
