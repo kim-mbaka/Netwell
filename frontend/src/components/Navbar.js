@@ -13,11 +13,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <header className="w-full sticky top-0 z-40">
-      <div className="bg-gradient-to-r from-lime via-lime to-yellow-300 text-navy text-center py-3 px-4 text-base font-bold shadow-lg tracking-wide">
-        <span className="inline-block animate-pulse mr-2"></span>
-        Fiber's Here – Get Connected Today + Save Big
-      </div>
-      <nav className="bg-navy px-6 py-4 flex items-center justify-between lg:justify-center lg:gap-12">
+      <nav className="bg-navy px-6 py-2.5 flex items-center justify-between">
         {/* Logo - Left */}
         <Link to="/" className="flex-shrink-0 hover:opacity-80 transition">
           <img
@@ -26,7 +22,7 @@ export default function Navbar() {
             width="139"
             height="120"
             decoding="async"
-            className="h-12 sm:h-14 lg:h-16 w-auto"
+            className="h-9 sm:h-10 lg:h-11 w-auto"
           />
         </Link>
 
@@ -41,8 +37,8 @@ export default function Navbar() {
           <span className="block w-6 h-0.5 bg-white"></span>
         </button>
 
-        {/* Desktop Nav - Center */}
-        <ul className="hidden lg:flex gap-8 items-center flex-1 justify-center">
+        {/* Desktop Nav - Right */}
+        <ul className="hidden lg:flex gap-8 items-center">
           {navLinks.map(link => (
             <li key={link.to}>
               <NavLink
@@ -57,21 +53,27 @@ export default function Navbar() {
               </NavLink>
             </li>
           ))}
+          <li>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-lime font-bold'
+                  : 'text-white hover:text-lime transition'
+              }
+            >
+              Contact Us
+            </NavLink>
+          </li>
+          <li>
+            <a
+              href="/admin/"
+              className="rounded-full border border-lime text-lime px-4 py-1.5 font-semibold hover:bg-lime hover:text-navy transition"
+            >
+              Staff Sign In
+            </a>
+          </li>
         </ul>
-
-        {/* Contact Us - Right (Desktop Only) */}
-        <NavLink
-          to="/contact"
-          className={({ isActive }) =>
-            `hidden lg:block ${
-              isActive
-                ? 'text-lime font-bold'
-                : 'text-white hover:text-lime transition'
-            }`
-          }
-        >
-          Contact Us
-        </NavLink>
       </nav>
 
       {/* Mobile Menu Dropdown */}
@@ -106,6 +108,13 @@ export default function Navbar() {
           >
             Contact Us
           </NavLink>
+          <a
+            href="/admin/"
+            className="mt-2 inline-block w-max rounded-full border border-lime text-lime px-4 py-1.5 font-semibold hover:bg-lime hover:text-navy transition"
+            onClick={() => setMenuOpen(false)}
+          >
+            Staff Sign In
+          </a>
         </div>
       )}
     </header>
