@@ -12,8 +12,8 @@ const navLinks = [
 export default function Navbar() {
   return (
     <header className="w-full sticky top-0 z-40">
-      {/* Logo left; links wrap and flow from the logo on mobile — no hamburger */}
-      <nav className="bg-navy px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+      {/* Logo and links on a single line — no hamburger */}
+      <nav className="bg-navy px-3 sm:px-6 py-2.5 flex flex-nowrap items-center justify-between gap-x-2">
         {/* Logo - Left */}
         <Link to="/" className="flex-shrink-0 hover:opacity-80 transition">
           <img
@@ -26,31 +26,25 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Nav links - always visible, right-aligned on desktop, wrapping on mobile */}
-        <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 sm:gap-x-8 text-sm sm:text-base">
+        {/* Nav links - single line, right-aligned */}
+        <ul className="flex flex-nowrap items-center gap-x-3 sm:gap-x-6 lg:gap-x-8 text-xs sm:text-sm lg:text-base">
           {navLinks.map(link => (
             <li key={link.to}>
               <NavLink
                 to={link.to}
                 end={link.to === '/'}
                 className={({ isActive }) =>
-                  isActive
-                    ? 'text-lime font-bold'
-                    : 'text-white hover:text-lime transition'
+                  `whitespace-nowrap ${
+                    isActive
+                      ? 'text-lime font-bold'
+                      : 'text-white hover:text-lime transition'
+                  }`
                 }
               >
                 {link.label}
               </NavLink>
             </li>
           ))}
-          <li>
-            <a
-              href="/admin/"
-              className="rounded-full border border-lime text-lime px-4 py-1.5 font-semibold hover:bg-lime hover:text-navy transition"
-            >
-              Staff Sign In
-            </a>
-          </li>
         </ul>
       </nav>
     </header>

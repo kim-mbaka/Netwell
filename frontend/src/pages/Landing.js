@@ -54,12 +54,21 @@ export default function Landing() {
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-200 mb-6 lg:mb-8 leading-relaxed">
             Connecting to a world of possiblities...
           </p>
-          <button
-            className="bg-lime text-navy font-bold px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg rounded-lg hover:bg-green-400 transition shadow-lg"
-            onClick={handleViewPlans}
-          >
-            View Plans
-          </button>
+          {/* CTA pair — layered above the hero image so they stay readable */}
+          <div className="relative z-20 flex flex-wrap items-center gap-3 sm:gap-4">
+            <button
+              className="bg-lime text-navy font-bold px-8 py-3 text-base sm:text-lg rounded-full hover:bg-green-400 transition shadow-lg"
+              onClick={handleViewPlans}
+            >
+              View Plans
+            </button>
+            <a
+              href="/admin/"
+              className="border border-lime text-lime font-bold px-8 py-3 text-base sm:text-lg rounded-full bg-navy/60 backdrop-blur-sm hover:bg-lime hover:text-navy transition shadow-lg"
+            >
+              Staff Sign In
+            </a>
+          </div>
         </div>
 
         {/* Floating Transparent Cutout Image - Right Side */}
