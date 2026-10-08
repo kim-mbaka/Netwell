@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { handleApiError } from '../utils/errorHandler';
+import PlanCard from '../components/PlanCard';
 
 export default function Pricing() {
   const navigate = useNavigate();
@@ -23,31 +24,20 @@ export default function Pricing() {
       });
   }, []);
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      <button 
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+      <button
         onClick={() => navigate(-1)}
         className="text-lime text-lg font-semibold mb-8 inline-block hover:text-green-400 transition"
       >
         ← Go back
       </button>
-      <h2 className="text-3xl font-bold mb-8 text-ink">Choose Your Plan</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {plans.map(plan => (
-          <div key={plan.id} className="bg-surface border border-line rounded-xl shadow-lg p-6 flex flex-col hover:scale-105 transition-transform">
-            <div className="text-ink text-xl font-bold mb-2">{plan.title}</div>
-            <div className="text-lime text-2xl font-bold mb-1">{plan.speed}</div>
-            {plan.price && (
-              <div className="text-ink text-lg font-semibold mb-4">
-                KES {Number(plan.price).toLocaleString()}<span className="text-sm font-normal text-ink-soft">/mo</span>
-              </div>
-            )}
-            <ul className="mb-4 list-disc list-inside text-ink">
-              {plan.features.map((f, i) => <li key={i}>{f}</li>)}
-            </ul>
-            <Link to="/contact" className="mt-auto inline-block w-full text-center bg-lime text-navy font-bold px-4 py-2 rounded hover:bg-green-400 transition">
-              Select Plan
-            </Link>
-          </div>
+      <div className="mb-10">
+        <h2 className="text-3xl lg:text-4xl font-bold text-ink">Internet Packages</h2>
+        <p className="text-ink-soft mt-2">Get the best value for your home.</p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {plans.map((plan, i) => (
+          <PlanCard key={plan.id} plan={plan} popular={i === 1} />
         ))}
       </div>
     </section>
