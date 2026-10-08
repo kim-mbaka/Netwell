@@ -26,8 +26,9 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Nav links - single line, evenly distributed from near the logo */}
-        <ul className="flex flex-1 flex-nowrap items-center justify-between ml-3 sm:ml-8 lg:ml-12 text-xs sm:text-sm lg:text-base">
+        {/* Nav links - evenly distributed across the bar on mobile,
+            right-clustered on desktop */}
+        <ul className="flex flex-1 lg:flex-none flex-nowrap items-center justify-between lg:justify-end ml-3 sm:ml-8 lg:ml-auto lg:gap-x-8 text-xs sm:text-sm lg:text-base">
           {navLinks.map(link => (
             <li key={link.to}>
               <NavLink
