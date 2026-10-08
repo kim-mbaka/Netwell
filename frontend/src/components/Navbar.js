@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <header className="w-full sticky top-0 z-40">
       {/* Logo and links on a single line — no hamburger */}
-      <nav className="bg-navy px-3 sm:px-6 py-2.5 flex flex-nowrap items-center justify-between gap-x-2">
+      <nav className="bg-navy px-3 sm:px-6 py-2.5 flex flex-nowrap items-center gap-x-2">
         {/* Logo - Left */}
         <Link to="/" className="flex-shrink-0 hover:opacity-80 transition">
           <img
@@ -26,8 +26,8 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Nav links - single line, right-aligned */}
-        <ul className="flex flex-nowrap items-center gap-x-3 sm:gap-x-6 lg:gap-x-8 text-xs sm:text-sm lg:text-base">
+        {/* Nav links - single line, evenly distributed from near the logo */}
+        <ul className="flex flex-1 flex-nowrap items-center justify-between ml-3 sm:ml-8 lg:ml-12 text-xs sm:text-sm lg:text-base">
           {navLinks.map(link => (
             <li key={link.to}>
               <NavLink
