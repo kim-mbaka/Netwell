@@ -10,26 +10,38 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Light theme (default base) */
+/* Theme tokens — light is the default base */
+:root {
+  --page: #eef2fb;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --ink: #0f1f4b;
+  --ink-soft: #50607f;
+  --line: #e2e8f0;
+}
+
+html.dark {
+  --page: #0f2350;
+  --surface: #1a3570;
+  --surface-2: #244488;
+  --ink: #eaf0ff;
+  --ink-soft: #aebbd9;
+  --line: rgba(255, 255, 255, 0.12);
+}
+
 html {
-  background-color: #eef2fb;
+  background-color: var(--page);
 }
 
 body {
   font-weight: 400;
-  color: #0f1f4b;
-  background-color: #eef2fb;
+  color: var(--ink);
+  background-color: var(--page);
   min-height: 100vh;
 }
 
-/* Dark theme — royal-blue gradient shell */
-html.dark {
-  background-color: #0e2150;
-}
-
+/* Dark theme — royal-blue gradient shell behind the page panels */
 html.dark body {
-  color: #ffffff;
-  background-color: #0e2150;
   background-image: linear-gradient(135deg, #0e2150 0%, #17306b 48%, #244a9c 100%);
   background-attachment: fixed;
 }

@@ -146,8 +146,8 @@ const renderBodyContent = (body) => {
           key={`heading-${index}`}
           className={
             block.level === 2
-              ? 'mt-7 mb-3 text-xl sm:text-2xl font-bold text-navy leading-tight tracking-[-0.02em]'
-              : 'mt-5 mb-2 text-lg sm:text-xl font-semibold text-navy leading-snug tracking-[-0.015em]'
+              ? 'mt-7 mb-3 text-xl sm:text-2xl font-bold text-ink leading-tight tracking-[-0.02em]'
+              : 'mt-5 mb-2 text-lg sm:text-xl font-semibold text-ink leading-snug tracking-[-0.015em]'
           }
         >
           {renderInlineMarkdown(block.content)}
@@ -160,7 +160,7 @@ const renderBodyContent = (body) => {
       return (
         <ListTag
           key={`list-${index}`}
-          className={`mb-5 ml-5 sm:ml-6 space-y-2 text-[15px] sm:text-base text-navy/85 ${block.ordered ? 'list-decimal' : 'list-disc'}`}
+          className={`mb-5 ml-5 sm:ml-6 space-y-2 text-[15px] sm:text-base text-ink-soft ${block.ordered ? 'list-decimal' : 'list-disc'}`}
         >
           {block.items.map((item, itemIndex) => (
             <li key={`${block.type}-${index}-${itemIndex}`} className="leading-7 sm:leading-8 pl-1 marker:text-lime">
@@ -172,7 +172,7 @@ const renderBodyContent = (body) => {
     }
 
     return (
-      <p key={`paragraph-${index}`} className="mb-4 text-[15px] sm:text-base leading-7 sm:leading-8 text-navy/85">
+      <p key={`paragraph-${index}`} className="mb-4 text-[15px] sm:text-base leading-7 sm:leading-8 text-ink-soft">
         {renderInlineMarkdown(block.content)}
       </p>
     );
@@ -210,31 +210,31 @@ export default function BlogModal({ post, isOpen, onClose }) {
       onKeyDown={handleEscape}
       className="fixed inset-0 z-50 rounded-lg shadow-2xl max-w-3xl mx-auto backdrop:bg-black/50 backdrop:backdrop-blur-sm"
     >
-      <div className="bg-white rounded-[26px] overflow-hidden flex flex-col max-h-[90vh] w-[min(92vw,760px)] shadow-[0_30px_70px_rgba(17,24,39,0.18)] border border-slate-200/80">
-        <div className="flex justify-between items-start gap-4 px-4 py-4 sm:px-6 sm:py-5 border-b border-slate-200 bg-gradient-to-r from-slate-50 via-white to-slate-50">
+      <div className="bg-surface rounded-[26px] overflow-hidden flex flex-col max-h-[90vh] w-[min(92vw,760px)] shadow-[0_30px_70px_rgba(17,24,39,0.18)] border border-line">
+        <div className="flex justify-between items-start gap-4 px-4 py-4 sm:px-6 sm:py-5 border-b border-line bg-surface-2">
           <div className="min-w-0 pr-2">
-            <div className="mb-2 flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+            <div className="mb-2 flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-ink-soft">
               <span>Netwell Fiber</span>
-              <span className="h-1 w-1 rounded-full bg-slate-300" />
+              <span className="h-1 w-1 rounded-full bg-line" />
               <span>Insight</span>
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-navy leading-[1.05] tracking-[-0.04em]">{post.title}</h2>
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-ink leading-[1.05] tracking-[-0.04em]">{post.title}</h2>
           </div>
           <button
             onClick={onClose}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-xl text-slate-500 shadow-sm transition hover:border-slate-300 hover:text-slate-700 hover:bg-slate-50"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-xl text-ink-soft shadow-sm transition hover:text-ink hover:bg-surface-2"
             aria-label="Close"
           >
             ×
           </button>
         </div>
 
-        <div className="overflow-y-auto flex-1 flex flex-col bg-white">
+        <div className="overflow-y-auto flex-1 flex flex-col bg-surface">
           <div className="px-4 py-4 sm:px-6 sm:py-6 flex-1">
             <div className="max-w-none">
-              <div className="mb-7 rounded-[22px] border border-slate-200 bg-[linear-gradient(135deg,#f8fafc_0%,#f7f8f3_100%)] p-4 sm:p-5">
-                <p className="mb-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Why it matters</p>
-                <p className="font-serif text-base sm:text-xl leading-7 sm:leading-9 text-navy/80">
+              <div className="mb-7 rounded-[22px] border border-line bg-surface-2 p-4 sm:p-5">
+                <p className="mb-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-ink-soft">Why it matters</p>
+                <p className="font-serif text-base sm:text-xl leading-7 sm:leading-9 text-ink-soft">
                   {post.excerpt || 'Important guidance for your home internet setup.'}
                 </p>
               </div>
@@ -243,10 +243,10 @@ export default function BlogModal({ post, isOpen, onClose }) {
           </div>
         </div>
 
-        <div className="border-t border-slate-200 bg-slate-50/70 p-3 sm:p-4 flex justify-end">
+        <div className="border-t border-line bg-surface-2 p-3 sm:p-4 flex justify-end">
           <button
             onClick={onClose}
-            className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-100"
+            className="rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface-2"
           >
             Close
           </button>

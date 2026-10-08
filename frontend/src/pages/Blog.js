@@ -20,7 +20,7 @@ export default function Blog() {
   }, []);
 
   return (
-    <section className="bg-gray-50 py-16 px-6 lg:px-12 min-h-screen">
+    <section className="bg-page py-16 px-6 lg:px-12 min-h-screen">
       <div className="max-w-6xl mx-auto">
       <button 
         onClick={() => navigate(-1)}
@@ -28,12 +28,12 @@ export default function Blog() {
       >
         ← Go back
       </button>
-        <h2 className="text-4xl font-bold mb-12 text-navy text-center">
+        <h2 className="text-4xl font-bold mb-12 text-ink text-center">
           Discover Even More
         </h2>
 
         {posts.length === 0 ? (
-          <div className="text-center text-gray-600 py-12">
+          <div className="text-center text-ink-soft py-12">
             <p>No blog posts available yet. Check back soon!</p>
           </div>
         ) : (

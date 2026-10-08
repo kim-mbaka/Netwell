@@ -30,18 +30,18 @@ export default function Pricing() {
       >
         ← Go back
       </button>
-      <h2 className="text-3xl font-bold mb-8 text-navy dark:text-white">Choose Your Plan</h2>
+      <h2 className="text-3xl font-bold mb-8 text-ink">Choose Your Plan</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {plans.map(plan => (
-          <div key={plan.id} className="bg-white rounded-xl shadow-lg p-6 flex flex-col hover:scale-105 transition-transform">
-            <div className="text-navy text-xl font-bold mb-2">{plan.title}</div>
+          <div key={plan.id} className="bg-surface border border-line rounded-xl shadow-lg p-6 flex flex-col hover:scale-105 transition-transform">
+            <div className="text-ink text-xl font-bold mb-2">{plan.title}</div>
             <div className="text-lime text-2xl font-bold mb-1">{plan.speed}</div>
             {plan.price && (
-              <div className="text-navy text-lg font-semibold mb-4">
-                KES {Number(plan.price).toLocaleString()}<span className="text-sm font-normal text-gray-500">/mo</span>
+              <div className="text-ink text-lg font-semibold mb-4">
+                KES {Number(plan.price).toLocaleString()}<span className="text-sm font-normal text-ink-soft">/mo</span>
               </div>
             )}
-            <ul className="mb-4 list-disc list-inside text-navy">
+            <ul className="mb-4 list-disc list-inside text-ink">
               {plan.features.map((f, i) => <li key={i}>{f}</li>)}
             </ul>
             <Link to="/contact" className="mt-auto inline-block w-full text-center bg-lime text-navy font-bold px-4 py-2 rounded hover:bg-green-400 transition">

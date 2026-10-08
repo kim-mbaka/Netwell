@@ -5,10 +5,10 @@ export default function BlogCard({ post, onLearnMore }) {
   const truncatedExcerpt = post.excerpt?.substring(0, 150) + (post.excerpt?.length > 150 ? '...' : '');
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full">
+    <div className="bg-surface border border-line rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full">
       <div className="p-6 flex-1 flex flex-col">
-        <h3 className="text-navy text-xl font-bold mb-3 line-clamp-2">{post.title}</h3>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">
+        <h3 className="text-ink text-xl font-bold mb-3 line-clamp-2">{post.title}</h3>
+        <p className="text-ink-soft text-sm mb-4 line-clamp-3 flex-1">
           {truncatedExcerpt}
         </p>
         <button

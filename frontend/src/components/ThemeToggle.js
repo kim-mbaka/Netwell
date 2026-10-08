@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
 function getInitialTheme() {
   if (typeof document !== 'undefined' &&
@@ -24,37 +25,14 @@ export default function ThemeToggle({ className = '' }) {
   return (
     <button
       type="button"
-      role="switch"
-      aria-checked={isDark}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className={`relative inline-flex h-8 w-14 flex-shrink-0 items-center rounded-full border transition-colors
-        ${isDark
-          ? 'bg-white/10 border-lime/60'
-          : 'bg-navy/5 border-navy/25'} ${className}`}
+      className={`inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-lime/60 text-lime hover:bg-lime hover:text-navy transition ${className}`}
     >
-      {/* Icons sit behind the knob */}
-      <span
-        className={`pointer-events-none absolute left-1.5 text-[11px] leading-none transition-opacity ${
-          isDark ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        🌙
-      </span>
-      <span
-        className={`pointer-events-none absolute right-1.5 text-[11px] leading-none transition-opacity ${
-          isDark ? 'opacity-0' : 'opacity-100'
-        }`}
-      >
-        ☀️
-      </span>
-      {/* Sliding knob */}
-      <span
-        className={`inline-block h-6 w-6 transform rounded-full bg-lime shadow-md transition-transform duration-300 ${
-          isDark ? 'translate-x-7' : 'translate-x-1'
-        }`}
-      />
+      {isDark
+        ? <MoonIcon className="h-5 w-5" />
+        : <SunIcon className="h-5 w-5" />}
     </button>
   );
 }

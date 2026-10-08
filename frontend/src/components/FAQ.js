@@ -29,19 +29,19 @@ export default function FAQ({ faqs = [] }) {
   const faqList = faqs && faqs.length > 0 ? faqs : defaultFAQs;
 
   return (
-    <section className="bg-gray-100 py-16 px-6 lg:px-12">
+    <section className="bg-page py-16 px-6 lg:px-12">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-navy text-center mb-16">
+        <h2 className="text-4xl font-bold text-ink text-center mb-16">
           Have questions? We've got answers.
         </h2>
 
         <div className="space-y-4">
           {faqList.map((item, idx) => (
-            <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+            <div key={idx} className="bg-surface border border-line rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
               {/* Question - Accordion Header */}
               <button
                 onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-                className="w-full px-6 py-5 flex justify-between items-center bg-white hover:bg-gray-50 transition font-semibold text-navy text-left"
+                className="w-full px-6 py-5 flex justify-between items-center bg-surface hover:bg-surface-2 transition font-semibold text-ink text-left"
               >
                 <span className="text-lg">{item.question}</span>
                 <span
@@ -55,7 +55,7 @@ export default function FAQ({ faqs = [] }) {
 
               {/* Answer - Accordion Content */}
               {openIdx === idx && (
-                <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 text-gray-700 leading-relaxed">
+                <div className="px-6 py-4 bg-surface-2 border-t border-line text-ink-soft leading-relaxed">
                   {item.answer}
                 </div>
               )}

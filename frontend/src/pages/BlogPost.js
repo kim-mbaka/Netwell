@@ -138,8 +138,8 @@ const renderBodyContent = (body) => {
           key={`heading-${index}`}
           className={
             block.level === 2
-              ? 'mt-7 mb-3 text-xl sm:text-2xl md:text-3xl font-bold text-navy leading-tight tracking-[-0.02em]'
-              : 'mt-5 mb-2 text-lg sm:text-xl md:text-2xl font-semibold text-navy leading-snug tracking-[-0.015em]'
+              ? 'mt-7 mb-3 text-xl sm:text-2xl md:text-3xl font-bold text-ink leading-tight tracking-[-0.02em]'
+              : 'mt-5 mb-2 text-lg sm:text-xl md:text-2xl font-semibold text-ink leading-snug tracking-[-0.015em]'
           }
         >
           {renderInlineMarkdown(block.content)}
@@ -152,7 +152,7 @@ const renderBodyContent = (body) => {
       return (
         <ListTag
           key={`list-${index}`}
-          className={`mb-5 ml-5 sm:ml-6 space-y-2 text-base sm:text-lg text-navy/85 ${block.ordered ? 'list-decimal' : 'list-disc'}`}
+          className={`mb-5 ml-5 sm:ml-6 space-y-2 text-base sm:text-lg text-ink-soft ${block.ordered ? 'list-decimal' : 'list-disc'}`}
         >
           {block.items.map((item, itemIndex) => (
             <li key={`${block.type}-${index}-${itemIndex}`} className="leading-7 sm:leading-8 pl-1 marker:text-lime">
@@ -164,7 +164,7 @@ const renderBodyContent = (body) => {
     }
 
     return (
-      <p key={`paragraph-${index}`} className="mb-4 text-base sm:text-lg leading-7 sm:leading-8 text-navy/85">
+      <p key={`paragraph-${index}`} className="mb-4 text-base sm:text-lg leading-7 sm:leading-8 text-ink-soft">
         {renderInlineMarkdown(block.content)}
       </p>
     );
@@ -260,7 +260,7 @@ export default function BlogPost() {
     }
   }, [post, slug]);
 
-  if (!post) return <div className="text-center text-navy dark:text-white py-20">Loading...</div>;
+  if (!post) return <div className="text-center text-ink py-20">Loading...</div>;
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-12 md:py-16">
@@ -271,26 +271,26 @@ export default function BlogPost() {
         ← Go back
       </button>
 
-      <article className="rounded-[28px] bg-white p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_rgba(15,23,42,0.12)] border border-slate-200/80">
+      <article className="rounded-[28px] bg-surface p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_rgba(15,23,42,0.12)] border border-line">
         <div className="mb-6 sm:mb-8 border-l-4 border-lime pl-4">
-          <div className="mb-3 flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.26em] text-slate-500">
+          <div className="mb-3 flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.26em] text-ink-soft">
             <span>Netwell Fiber</span>
-            <span className="h-1 w-1 rounded-full bg-slate-300" />
+            <span className="h-1 w-1 rounded-full bg-line" />
             <span>Insight</span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl font-bold text-navy leading-[0.95] tracking-[-0.04em]">{post.title}</h1>
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl font-bold text-ink leading-[0.95] tracking-[-0.04em]">{post.title}</h1>
         </div>
 
         {post.excerpt && (
-          <div className="mb-8 sm:mb-10 rounded-[22px] border border-slate-200 bg-[linear-gradient(135deg,#f8fafc_0%,#f7f8f3_100%)] p-4 sm:p-5">
-            <p className="mb-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Why it matters</p>
-            <p className="font-serif text-base sm:text-xl leading-7 sm:leading-9 text-navy/80">
+          <div className="mb-8 sm:mb-10 rounded-[22px] border border-line bg-surface-2 p-4 sm:p-5">
+            <p className="mb-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.24em] text-ink-soft">Why it matters</p>
+            <p className="font-serif text-base sm:text-xl leading-7 sm:leading-9 text-ink-soft">
               {post.excerpt}
             </p>
           </div>
         )}
 
-        <div className="prose prose-slate prose-lg max-w-none text-navy prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-[-0.02em] prose-h2:mt-10 prose-h2:mb-3 prose-h3:mt-8 prose-h3:mb-2 prose-p:my-5 prose-p:text-[15px] prose-p:sm:text-[17px] prose-p:leading-8 prose-p:sm:leading-9 prose-li:my-2 prose-ul:my-5 prose-ol:my-5 prose-a:text-lime prose-a:no-underline hover:prose-a:underline">
+        <div className="prose prose-slate prose-lg max-w-none text-ink prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-[-0.02em] prose-h2:mt-10 prose-h2:mb-3 prose-h3:mt-8 prose-h3:mb-2 prose-p:my-5 prose-p:text-[15px] prose-p:sm:text-[17px] prose-p:leading-8 prose-p:sm:leading-9 prose-li:my-2 prose-ul:my-5 prose-ol:my-5 prose-a:text-lime prose-a:no-underline hover:prose-a:underline">
           {renderBodyContent(post.body)}
         </div>
       </article>
