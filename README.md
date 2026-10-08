@@ -4,8 +4,8 @@ A modern, responsive Wi-Fi company website for Netwell, built with React (fronte
 
 ## Features
 - Responsive design, mobile-first
-- Pages: Home, About, Pricing, Reviews, Blog, Contact
-- Dynamic content: plans, reviews, blog posts, about
+- Pages: Home, About, Pricing, Blog, Contact
+- Dynamic content: plans, blog posts, about
 - Admin-editable via Django admin
 - PostgreSQL database
 - Security best practices
@@ -174,7 +174,7 @@ Update deploy: `git pull && docker compose -f docker-compose.prod.yml up -d --bu
 
 ### 5. Final Checks
 
-- Log in to Django admin and add/edit plans, reviews, blog posts, and about page content.
+- Log in to Django admin and add/edit plans, blog posts, and about page content.
 - Visit the site and confirm all features work as intended.
 
 ---

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from netwellapp.models import PricingPlan, BlogPost, AboutPage, Review
+from netwellapp.models import PricingPlan, BlogPost, AboutPage
 
 class Command(BaseCommand):
     help = 'Verify database data'
@@ -8,8 +8,7 @@ class Command(BaseCommand):
         plans = PricingPlan.objects.all()
         posts = BlogPost.objects.all()
         about = AboutPage.objects.first()
-        reviews = Review.objects.all()
-        
+
         self.stdout.write(self.style.SUCCESS(f"✓ Pricing Plans: {plans.count()}"))
         for plan in plans:
             self.stdout.write(f"  - {plan.id}: {plan.title}")
@@ -22,5 +21,3 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f"✓ About Page: EXISTS"))
         else:
             self.stdout.write(self.style.WARNING(f"✗ About Page: MISSING"))
-        
-        self.stdout.write(self.style.SUCCESS(f"✓ Reviews: {reviews.count()}"))

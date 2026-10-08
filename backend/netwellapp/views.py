@@ -1,21 +1,10 @@
 from rest_framework import generics
-from .models import PricingPlan, Review, BlogPost, AboutPage
-from .serializers import PricingPlanSerializer, ReviewSerializer, BlogPostSerializer, AboutPageSerializer
+from .models import PricingPlan, BlogPost, AboutPage
+from .serializers import PricingPlanSerializer, BlogPostSerializer, AboutPageSerializer
 
 class PricingPlanList(generics.ListAPIView):
     queryset = PricingPlan.objects.all()
     serializer_class = PricingPlanSerializer
-
-class ReviewListCreate(generics.ListCreateAPIView):
-    queryset = Review.objects.order_by('-timestamp')
-    serializer_class = ReviewSerializer
-    throttle_scope = 'reviews'
-
-    def get_throttles(self):
-        # Only rate-limit posting reviews; listing stays unthrottled.
-        if self.request.method == 'POST':
-            return super().get_throttles()
-        return []
 
 class BlogPostList(generics.ListAPIView):
     queryset = BlogPost.objects.order_by('-created_at')

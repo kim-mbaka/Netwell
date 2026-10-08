@@ -1,6 +1,6 @@
 # Netwell Backend
 
-Django backend for Netwell Fiber. Provides API endpoints for plans, reviews, blog posts, and about page. All content is editable via Django admin.
+Django backend for Netwell Fiber. Provides API endpoints for plans, blog posts, and about page. All content is editable via Django admin.
 
 ## Setup
 - Copy `.env.example` to `.env` and fill in your secrets.
