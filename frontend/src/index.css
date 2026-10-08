@@ -34,7 +34,9 @@ html {
 }
 
 body {
-  font-weight: 400;
+  /* Medium base weight so body text reads a little bolder site-wide;
+     headings/buttons still override with their heavier weights. */
+  font-weight: 500;
   color: var(--ink);
   background-color: var(--page);
   min-height: 100vh;
