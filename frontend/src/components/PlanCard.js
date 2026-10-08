@@ -34,7 +34,7 @@ export default function PlanCard({ plan, popular = false }) {
 
       <ul className="space-y-2.5 mb-6 flex-1">
         {plan.features.map((f, i) => (
-          <li key={i} className="flex items-start gap-2 text-ink-soft text-sm">
+          <li key={i} className="flex items-start gap-2 text-ink-soft text-sm font-medium">
             <CheckIcon className="h-4 w-4 text-lime flex-shrink-0 mt-0.5" />
             <span>{f}</span>
           </li>

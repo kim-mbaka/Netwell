@@ -34,7 +34,7 @@ export default function Navbar() {
                 to={link.to}
                 end={link.to === '/'}
                 className={({ isActive }) =>
-                  `whitespace-nowrap ${
+                  `whitespace-nowrap font-medium ${
                     isActive
                       ? 'text-lime font-bold'
                       : 'text-navy dark:text-white hover:text-lime transition'
