@@ -1,8 +1,5 @@
-REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'netwellapp.exceptions.custom_exception_handler',
-}
-
 import os
+from datetime import timedelta
 from pathlib import Path
 from decouple import config, Csv
 
@@ -21,8 +18,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'django_filters',
+    'storages',
     'netwellapp',
+    'accounts',
+    'reports',
 ]
 
 MIDDLEWARE = [
@@ -103,3 +105,76 @@ CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=False, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- DRF / JWT auth for the staff field-reporting system ----------------------
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'netwellapp.exceptions.custom_exception_handler',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    # Public marketing endpoints stay open; reporting views set their own
+    # IsAuthenticated / office permissions explicitly.
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': config('THROTTLE_ANON', default='120/hour'),
+        'user': config('THROTTLE_USER', default='2000/hour'),
+        'login': config('THROTTLE_LOGIN', default='30/hour'),
+    },
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+# Shared DB cache so throttle counters are consistent across Gunicorn workers
+# (LocMem would be per-process). Table created at startup via createcachetable.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'netwell_cache',
+    }
+}
+
+# Signed, time-limited capability URLs for proof-of-work photos (seconds).
+PHOTO_URL_TTL = config('PHOTO_URL_TTL', default=3600, cast=int)
+
+# --- Object storage (MinIO / S3) for report photos ---------------------------
+# When a bucket is configured, proof-of-work photos go to MinIO/S3 (served back
+# only through the authenticated token endpoint); otherwise local filesystem.
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='')
+USE_S3 = bool(AWS_STORAGE_BUCKET_NAME)
+
+if USE_S3:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'storages.backends.s3.S3Storage',
+            'OPTIONS': {
+                'bucket_name': AWS_STORAGE_BUCKET_NAME,
+                'access_key': config('AWS_ACCESS_KEY_ID', default=''),
+                'secret_key': config('AWS_SECRET_ACCESS_KEY', default=''),
+                'endpoint_url': config('AWS_S3_ENDPOINT_URL', default=''),
+                'region_name': config('AWS_S3_REGION_NAME', default='us-east-1'),
+                'use_ssl': config('AWS_S3_USE_SSL', default=False, cast=bool),
+                # Private bucket: photos are streamed via our token endpoint,
+                # never fetched directly from MinIO.
+                'querystring_auth': False,
+                'file_overwrite': False,
+                'addressing_style': 'path',
+            },
+        },
+        'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
+    }
+else:
+    STORAGES = {
+        'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+        'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
+    }

@@ -2,7 +2,11 @@ Django>=4.2
 gunicorn
 psycopg2-binary
 djangorestframework
+djangorestframework-simplejwt>=5.3
 django-cors-headers
+django-filter>=24.3
+django-storages[s3]>=1.14
+boto3>=1.34
 Pillow
 python-dotenv
 python-decouple

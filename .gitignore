@@ -81,3 +81,6 @@ Thumbs.db
 .cache/
 .sass-cache/
 .next/
+
+# Local reference copy of the Enet reporting app (not part of this repo)
+/Enet Reporting/
