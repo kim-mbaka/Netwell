@@ -91,9 +91,9 @@ function InvitePanel() {
   );
 }
 
-function ActionCard({ icon: Icon, title, desc, soon }) {
-  return (
-    <div className="rounded-2xl border border-line bg-surface p-6 flex flex-col">
+function ActionCard({ icon: Icon, title, desc, soon, to }) {
+  const inner = (
+    <>
       <Icon className="h-7 w-7 text-lime mb-3" />
       <h3 className="text-ink font-bold text-lg">{title}</h3>
       <p className="text-ink-soft text-sm mt-1 flex-1">{desc}</p>
@@ -102,8 +102,17 @@ function ActionCard({ icon: Icon, title, desc, soon }) {
           Coming soon
         </span>
       )}
-    </div>
+    </>
   );
+  const base = 'rounded-2xl border border-line bg-surface p-6 flex flex-col';
+  if (to) {
+    return (
+      <Link to={to} className={`${base} hover:border-lime/60 hover:shadow-xl transition`}>
+        {inner}
+      </Link>
+    );
+  }
+  return <div className={base}>{inner}</div>;
 }
 
 export default function StaffHome() {
@@ -144,10 +153,10 @@ export default function StaffHome() {
           </div>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2">
-            <ActionCard icon={DocumentPlusIcon} title="New job report"
-              desc="File a report for each job you visit — customer, work done, materials, status and photos." soon />
-            <ActionCard icon={ChartBarIcon} title="My reports"
-              desc="See every report you've submitted and its review status." soon />
+            <ActionCard icon={DocumentPlusIcon} title="New job report" to="/staff/app/report/new"
+              desc="File a report for each job you visit — customer, work done, materials, status and photos." />
+            <ActionCard icon={ChartBarIcon} title="My reports" to="/staff/app/reports"
+              desc="See every report you've submitted and its review status." />
           </div>
         )}
       </main>

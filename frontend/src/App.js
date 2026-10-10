@@ -14,6 +14,8 @@ import RequireAuth from './staff/RequireAuth';
 import StaffLogin from './staff/pages/StaffLogin';
 import StaffRegister from './staff/pages/StaffRegister';
 import StaffHome from './staff/pages/StaffHome';
+import NewReport from './staff/pages/NewReport';
+import MyReports from './staff/pages/MyReports';
 
 // The public marketing site — navbar + footer around the content pages.
 function PublicSite() {
@@ -45,6 +47,8 @@ function App() {
           <Route path="/staff" element={<StaffLogin />} />
           <Route path="/staff/register" element={<StaffRegister />} />
           <Route path="/staff/app" element={<RequireAuth><StaffHome /></RequireAuth>} />
+          <Route path="/staff/app/report/new" element={<RequireAuth><NewReport /></RequireAuth>} />
+          <Route path="/staff/app/reports" element={<RequireAuth><MyReports /></RequireAuth>} />
           {/* Public marketing site */}
           <Route path="/*" element={<PublicSite />} />
         </Routes>
