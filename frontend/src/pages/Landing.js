@@ -63,12 +63,12 @@ export default function Landing() {
             >
               View Plans
             </button>
-            <a
-              href="/admin/"
+            <Link
+              to="/staff"
               className="border border-lime text-lime font-bold px-8 py-3 text-base sm:text-lg rounded-full bg-navy/60 backdrop-blur-sm hover:bg-lime hover:text-navy transition shadow-lg"
             >
               Staff Sign In
-            </a>
+            </Link>
           </div>
         </div>
 

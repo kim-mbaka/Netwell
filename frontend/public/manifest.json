@@ -1,0 +1,15 @@
+{
+  "name": "Netwells Field Reporting",
+  "short_name": "Netwells Staff",
+  "description": "Daily technician job reporting for Netwells Home Fibre.",
+  "start_url": "/staff",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0e2150",
+  "theme_color": "#0e2150",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "any", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
